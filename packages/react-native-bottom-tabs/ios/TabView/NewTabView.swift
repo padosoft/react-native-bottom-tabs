@@ -3,7 +3,6 @@ import SwiftUI
 @available(iOS 18, macOS 15, visionOS 2, tvOS 18, *)
 struct NewTabView: AnyTabView {
   @ObservedObject var props: TabViewProps
-  @AppStorage("sidebarCustomizations") var tabViewCustomization: TabViewCustomization
   
   var onLayout: (CGSize) -> Void
   var onSelect: (String) -> Void
@@ -43,8 +42,6 @@ struct NewTabView: AnyTabView {
               )
             }
             //.badge(tabData.badge)
-            .customizationID(tabData.key)
-            .customizationBehavior(.disabled, for: .sidebar, .tabBar)
             .accessibilityIdentifier(tabData.testID ?? "")
           }
         }
@@ -53,7 +50,6 @@ struct NewTabView: AnyTabView {
     .measureView { size in
       onLayout(size)
     }
-    .tabViewCustomization($tabViewCustomization)
     .hideTabBar(props.tabBarHidden)
   }
 }
