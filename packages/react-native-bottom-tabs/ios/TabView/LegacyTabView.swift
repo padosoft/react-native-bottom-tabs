@@ -1,17 +1,11 @@
 import SwiftUI
 
-struct LegacyTabView: View {
+struct LegacyTabView: AnyTabView {
   @ObservedObject var props: TabViewProps
-
-#if os(macOS)
-  var tabBar: NSTabView?
-#else
-  var tabBar: UITabBar?
-#endif
   
-  var onLayout: (_ size: CGSize) -> Void
-  var onSelect: (_ key: String) -> Void
-  var updateTabBarAppearance: (_ props: TabViewProps, _ tabBar: UITabBar?) -> Void
+  var onLayout: (CGSize) -> Void
+  var onSelect: (String) -> Void
+  var updateTabBarAppearance: () -> Void
   
   @ViewBuilder
   var body: some View {
@@ -49,7 +43,7 @@ struct LegacyTabView: View {
             .tabBadge(tabData.badge)
             .onAppear {
 #if !os(macOS)
-              updateTabBarAppearance(props, tabBar)
+              updateTabBarAppearance()
 #endif
 #if os(iOS)
               if index >= 4, !isFocused {

@@ -1,19 +1,13 @@
 import SwiftUI
 
 @available(iOS 18, macOS 15, visionOS 2, tvOS 18, *)
-struct NewTabView: View {
+struct NewTabView: AnyTabView {
   @ObservedObject var props: TabViewProps
   @AppStorage("sidebarCustomizations") var tabViewCustomization: TabViewCustomization
-
-  #if os(macOS)
-    var tabBar: NSTabView?
-  #else
-    var tabBar: UITabBar?
-  #endif
-
-  var onLayout: (_ size: CGSize) -> Void
-  var onSelect: (_ key: String) -> Void
-  var updateTabBarAppearance: (_ props: TabViewProps, _ tabBar: UITabBar?) -> Void
+  
+  var onLayout: (CGSize) -> Void
+  var onSelect: (String) -> Void
+  var updateTabBarAppearance: () -> Void
 
   @ViewBuilder
   var body: some View {
@@ -34,7 +28,7 @@ struct NewTabView: View {
                 .ignoresSafeArea(.container, edges: .all)
                 .onAppear {
                   #if !os(macOS)
-                    updateTabBarAppearance(props, tabBar)
+                    updateTabBarAppearance()
                   #endif
                   #if os(iOS)
                     if index >= 4 {
