@@ -15,15 +15,25 @@ struct TabViewImpl: View {
 #endif
   
   @ViewBuilder
-  var tabContent: some View {
+  var tabContent: some AnyTabView {
     if #available(iOS 18, macOS 15, visionOS 2, tvOS 18, *) {
       NewTabView(
-        props: props, tabBar: tabBar, onLayout: onLayout, onSelect: onSelect,
-        updateTabBarAppearance: updateTabBarAppearance)
+        props: props,
+        onLayout: onLayout,
+        onSelect: onSelect,
+        updateTabBarAppearance: {
+          updateTabBarAppearance(props: props, tabBar: tabBar)
+        }
+      )
     } else {
       LegacyTabView(
-        props: props, tabBar: tabBar, onLayout: onLayout, onSelect: onSelect,
-        updateTabBarAppearance: updateTabBarAppearance)
+        props: props,
+        onLayout: onLayout,
+        onSelect: onSelect,
+        updateTabBarAppearance: {
+          updateTabBarAppearance(props: props, tabBar: tabBar)
+        }
+      )
     }
   }
   
