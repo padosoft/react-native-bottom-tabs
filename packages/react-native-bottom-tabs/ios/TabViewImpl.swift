@@ -15,7 +15,7 @@ struct TabViewImpl: View {
 #endif
   
   @ViewBuilder
-  var tabContent: some AnyTabView {
+  var tabContent: some View {
     if #available(iOS 18, macOS 15, visionOS 2, tvOS 18, *) {
       NewTabView(
         props: props,
