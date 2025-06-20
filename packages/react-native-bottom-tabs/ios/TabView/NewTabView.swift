@@ -22,22 +22,18 @@ struct NewTabView: AnyTabView {
 
             let platformChild = props.children[safe: index] ?? PlatformView()
             let child = RepresentableView(view: platformChild)
+            let context = TabAppearContext(
+              index: index,
+              tabData: tabData,
+              props: props,
+              updateTabBarAppearance: updateTabBarAppearance,
+              onSelect: onSelect
+            )
 
             Tab(value: tabData.key, role: role) {
               child
                 .ignoresSafeArea(.container, edges: .all)
-                .onAppear {
-                  #if !os(macOS)
-                    updateTabBarAppearance()
-                  #endif
-                  #if os(iOS)
-                    if index >= 4 {
-                      if props.selectedPage != tabData.key {
-                        onSelect(tabData.key)
-                      }
-                    }
-                  #endif
-                }
+                .tabAppear(using: context)
             } label: {
               TabItem(
                 title: tabData.title,
