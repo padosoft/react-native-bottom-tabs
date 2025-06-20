@@ -13,25 +13,23 @@ struct TabViewImpl: View {
     #endif
 
     @ViewBuilder
-    var tabContent: some AnyTabView {
+    var tabContent: some View {
         if #available(iOS 18, macOS 15, visionOS 2, tvOS 18, *) {
             NewTabView(
                 props: props,
                 onLayout: onLayout,
-                onSelect: onSelect,
-                updateTabBarAppearance: {
+                onSelect: onSelect
+            )                {
                     updateTabBarAppearance(props: props, tabBar: tabBar)
                 }
-            )
         } else {
             LegacyTabView(
                 props: props,
                 onLayout: onLayout,
-                onSelect: onSelect,
-                updateTabBarAppearance: {
+                onSelect: onSelect
+            )                {
                     updateTabBarAppearance(props: props, tabBar: tabBar)
                 }
-            )
         }
     }
 
@@ -42,7 +40,6 @@ struct TabViewImpl: View {
 
     var body: some View {
         tabContent
-            .tabBarMinimizeBehavior(props.minimizeBehavior)
             #if !os(tvOS) && !os(macOS) && !os(visionOS)
                 .onTabItemEvent { index, isLongPress in
                     let item = props.filteredItems[safe: index]

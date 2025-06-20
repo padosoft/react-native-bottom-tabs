@@ -10,13 +10,13 @@ struct TabAppearContext {
 
 struct TabAppearModifier: ViewModifier {
   let context: TabAppearContext
-  
+
   func body(content: Content) -> some View {
     content.onAppear {
 #if !os(macOS)
       context.updateTabBarAppearance()
 #endif
-      
+
 #if os(iOS)
       if context.index >= 4, context.props.selectedPage != context.tabData.key {
         context.onSelect(context.tabData.key)

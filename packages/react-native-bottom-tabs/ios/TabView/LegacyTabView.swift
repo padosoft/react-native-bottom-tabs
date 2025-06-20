@@ -2,11 +2,11 @@ import SwiftUI
 
 struct LegacyTabView: AnyTabView {
   @ObservedObject var props: TabViewProps
-  
+
   var onLayout: (CGSize) -> Void
   var onSelect: (String) -> Void
   var updateTabBarAppearance: () -> Void
-  
+
   @ViewBuilder
   var body: some View {
     TabView(selection: $props.selectedPage) {
@@ -19,12 +19,12 @@ struct LegacyTabView: AnyTabView {
     }
     .hideTabBar(props.tabBarHidden)
   }
-  
+
   @ViewBuilder
   private func renderTabItem(at index: Int) -> some View {
     if let tabData = props.items[safe: index] {
       let isFocused = props.selectedPage == tabData.key
-      
+
       if !tabData.hidden || isFocused {
         let icon = props.icons[index]
         let child = props.children[safe: index] ?? PlatformView()
@@ -35,7 +35,7 @@ struct LegacyTabView: AnyTabView {
           updateTabBarAppearance: updateTabBarAppearance,
           onSelect: onSelect
         )
-        
+
         RepresentableView(view: child)
           .ignoresSafeArea(.container, edges: .all)
           .tabItem {

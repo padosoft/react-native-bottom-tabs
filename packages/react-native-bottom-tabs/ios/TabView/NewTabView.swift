@@ -3,7 +3,7 @@ import SwiftUI
 @available(iOS 18, macOS 15, visionOS 2, tvOS 18, *)
 struct NewTabView: AnyTabView {
   @ObservedObject var props: TabViewProps
-  
+
   var onLayout: (CGSize) -> Void
   var onSelect: (String) -> Void
   var updateTabBarAppearance: () -> Void
@@ -41,7 +41,7 @@ struct NewTabView: AnyTabView {
                 labeled: props.labeled
               )
             }
-            //.badge(tabData.badge)
+            // .badge(tabData.badge)
             .accessibilityIdentifier(tabData.testID ?? "")
           }
         }
