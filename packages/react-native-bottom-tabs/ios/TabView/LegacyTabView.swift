@@ -28,6 +28,13 @@ struct LegacyTabView: AnyTabView {
       if !tabData.hidden || isFocused {
         let icon = props.icons[index]
         let child = props.children[safe: index] ?? PlatformView()
+        let context = TabAppearContext(
+          index: index,
+          tabData: tabData,
+          props: props,
+          updateTabBarAppearance: updateTabBarAppearance,
+          onSelect: onSelect
+        )
         
         RepresentableView(view: child)
           .ignoresSafeArea(.container, edges: .all)
@@ -41,16 +48,7 @@ struct LegacyTabView: AnyTabView {
             .accessibilityIdentifier(tabData.testID ?? "")
             .tag(tabData.key)
             .tabBadge(tabData.badge)
-            .onAppear {
-#if !os(macOS)
-              updateTabBarAppearance()
-#endif
-#if os(iOS)
-              if index >= 4, !isFocused {
-                onSelect(tabData.key)
-              }
-#endif
-            }
+            .tabAppear(using: context)
           }
       }
     }
