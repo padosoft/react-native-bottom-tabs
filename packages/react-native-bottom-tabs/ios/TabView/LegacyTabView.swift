@@ -46,10 +46,10 @@ struct LegacyTabView: AnyTabView {
               labeled: props.labeled
             )
             .accessibilityIdentifier(tabData.testID ?? "")
-            .tag(tabData.key)
             .tabBadge(tabData.badge)
             .tabAppear(using: context)
           }
+          .tag(tabData.key)
       }
     }
   }
