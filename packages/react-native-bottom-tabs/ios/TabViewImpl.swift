@@ -19,17 +19,17 @@ struct TabViewImpl: View {
                 props: props,
                 onLayout: onLayout,
                 onSelect: onSelect
-            )                {
+            ) {
                     updateTabBarAppearance(props: props, tabBar: tabBar)
-                }
+            }
         } else {
             LegacyTabView(
                 props: props,
                 onLayout: onLayout,
                 onSelect: onSelect
-            )                {
+            ) {
                     updateTabBarAppearance(props: props, tabBar: tabBar)
-                }
+            }
         }
     }
 
